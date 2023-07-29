@@ -106,7 +106,7 @@ impl Tile {
     }
 }
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd)]
 pub enum TileState {
     Empty,
     Snake,

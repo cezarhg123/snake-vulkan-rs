@@ -32,7 +32,7 @@ fn main() {
         }
         
         let crnt_time = Instant::now();
-        if (crnt_time - prev_time).as_secs_f32() >= 1.0 / 10.0 {
+        if (crnt_time - prev_time).as_secs_f32() >= 1.0 / 8.0 {
             game.tick();
             prev_time = crnt_time;
             accept_input = true;

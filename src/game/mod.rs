@@ -3,6 +3,7 @@ pub mod tile;
 use std::{mem::MaybeUninit, collections::HashMap};
 
 use ash::vk;
+use rand::Rng;
 
 use crate::engine::Engine;
 use self::tile::{Tile, TileState};
@@ -76,7 +77,6 @@ impl Game {
     }
 
     pub fn tick(&mut self) {
-        println!("{:#?}", self.directions);
         let mut ate_apple = false;
 
         let forward = match self.current_direction {
@@ -149,6 +149,18 @@ impl Game {
         self.head = [head_pos[0] + forward[0], head_pos[1] + forward[1]];
         if !ate_apple {
             self.tail.0 = [tail_pos[0] + tail_forward[0], tail_pos[1] + tail_forward[1]];
+        }
+
+        if ate_apple {
+            loop {
+                let rand_x: i8 = rand::thread_rng().gen_range(0..10);
+                let rand_y: i8 = rand::thread_rng().gen_range(0..10);
+
+                if self.tiles.get(&[rand_x, rand_y]).unwrap().tile_state == TileState::Empty {
+                    self.tiles.get_mut(&[rand_x, rand_y]).unwrap().tile_state = TileState::Apple;
+                    break;
+                }
+            }
         }
     }
 
